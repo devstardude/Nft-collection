@@ -1,7 +1,9 @@
 import { useAppContext } from "../Context/AppContext";
 import { BsSun, BsMoonStars } from "react-icons/bs";
-type Props = {};
-const Navbar = ({}: Props) => {
+type Props = {
+  connect: () => void;
+};
+const Navbar = ({ connect }: Props) => {
   const mycontext = useAppContext();
   const theme = mycontext?.theme;
   console.log("theme", theme);
@@ -21,7 +23,10 @@ const Navbar = ({}: Props) => {
           </h3>
         </div>
         <div className="flex gap-2">
-          <div className="Center border-2  rounded-full px-4 dark:hover:bg-[#9b53ff42] hover:bg-[#8935ff] dark:text-white hover:text-white transition-colors duration-200 cursor-pointer dark:border-[#8935ff] border-[#ab6fff]">
+          <div
+            onClick={connect}
+            className="Center border-2  rounded-full px-4 dark:hover:bg-[#9b53ff42] hover:bg-[#8935ff] dark:text-white hover:text-white transition-colors duration-200 cursor-pointer dark:border-[#8935ff] border-[#ab6fff]"
+          >
             <h4 className="NoPad font-thin text-inherit">Connect wallet</h4>
           </div>
           <div
