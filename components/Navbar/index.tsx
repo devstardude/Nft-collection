@@ -7,7 +7,7 @@ const Navbar = ({}: Props) => {
   console.log("theme", theme);
   return (
     <div className="Center pt-[2rem]">
-      <div className="flex items-center w-full h-[65px] rounded-full border-2 px-5 dark:border-[#8935ff] border-slate-700">
+      <div className="flex items-center w-full h-[65px] rounded-full border-2 px-5 dark:border-[#8935ff] border-slate-700 bg-slate-200 dark:bg-[#9b53ff42]">
         <div className="Center h-full">
           <img
             className="w-[150px] invert dark:invert-0"
