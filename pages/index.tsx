@@ -21,10 +21,10 @@ const Home: NextPage = () => {
     address: string;
     tokenId: string;
     desc?: string;
+    owner:boolean
   }[];
 
   const [userNft, setUserNft] = useState<userNftType>([]);
-  const [collectionNft, setCollectionNft] = useState<userNftType>([]);
   const [activeClass, setActiveClass] = useState<string>("my-nft");
   const connectWithMetamask = useMetamask();
   const address = useAddress();
@@ -60,6 +60,7 @@ const Home: NextPage = () => {
             address: item.contract.address,
             tokenId: item.tokenId,
             desc: item.rawMetadata?.description,
+            owner:true
           };
         });
         setUserNft(() => [...fetchedNft]);
@@ -101,6 +102,7 @@ const Home: NextPage = () => {
                 address: item.contract.address,
                 tokenId: item.tokenId,
                 desc: item.rawMetadata?.description,
+                owner:false
               };
             });
 

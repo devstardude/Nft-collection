@@ -12,8 +12,10 @@ type Props = {
   address: string;
   tokenId: string;
   desc?: string;
+  owner:boolean
 };
-const NftItem = ({ title, img, desc, address, tokenId }: Props) => {
+const NftItem = ({ title, img, desc, address, tokenId, owner }: Props) => {
+  {console.log("yo",owner)}
   return (
     <div className="PurpleBorderButton rounded-[2.3rem] p-4 w-[20rem] mb-4 transition-all duration-300 ">
       <div className="w-full h-[250px] rounded-[2.5rem] overflow-clip">
@@ -47,32 +49,34 @@ const NftItem = ({ title, img, desc, address, tokenId }: Props) => {
             </span>
           )}
         </p>
-        <div className="flex justify-around rounded-full border-2 border-slate-600 dark:border-[#8935FF] py-2 px-2">
-          <TwitterShareButton
-            title={`I just got this cool NFT "${title}"`}
-            url={`https://opensea.io/assets/matic/${address}/${tokenId}`}
-          >
-            <TwitterIcon size={32} round={true} />
-          </TwitterShareButton>
-          <LinkedinShareButton
-            title={`I just got this cool NFT "${title}"`}
-            url={`https://opensea.io/assets/matic/${address}/${tokenId}`}
-          >
-            <LinkedinIcon size={32} round={true} />
-          </LinkedinShareButton>
-          <RedditShareButton
-            title={`I just got this cool NFT "${title}"`}
-            url={`https://opensea.io/assets/matic/${address}/${tokenId}`}
-          >
-            <RedditIcon size={32} round={true} />
-          </RedditShareButton>
-          <WhatsappShareButton
-            title={`I just got this cool NFT "${title}"`}
-            url={`https://opensea.io/assets/matic/${address}/${tokenId}`}
-          >
-            <WhatsappIcon size={32} round={true} />
-          </WhatsappShareButton>
-        </div>
+        {owner===true && (
+          <div className="flex justify-around rounded-full border-2 border-slate-600 dark:border-[#8935FF] py-2 px-2">
+            <TwitterShareButton
+              title={`I just got this cool NFT "${title}"`}
+              url={`https://opensea.io/assets/matic/${address}/${tokenId}`}
+            >
+              <TwitterIcon size={32} round={true} />
+            </TwitterShareButton>
+            <LinkedinShareButton
+              title={`I just got this cool NFT "${title}"`}
+              url={`https://opensea.io/assets/matic/${address}/${tokenId}`}
+            >
+              <LinkedinIcon size={32} round={true} />
+            </LinkedinShareButton>
+            <RedditShareButton
+              title={`I just got this cool NFT "${title}"`}
+              url={`https://opensea.io/assets/matic/${address}/${tokenId}`}
+            >
+              <RedditIcon size={32} round={true} />
+            </RedditShareButton>
+            <WhatsappShareButton
+              title={`I just got this cool NFT "${title}"`}
+              url={`https://opensea.io/assets/matic/${address}/${tokenId}`}
+            >
+              <WhatsappIcon size={32} round={true} />
+            </WhatsappShareButton>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ type Props = {
     address: string;
     tokenId: string;
     desc?: string;
+    owner:boolean
   }[];
 };
 const NftContainer = ({ collectionName, items }: Props) => {
@@ -28,6 +29,7 @@ const NftContainer = ({ collectionName, items }: Props) => {
             desc={nft.desc}
             address={nft.address}
             tokenId={nft.tokenId}
+            owner={nft.owner}
             key={i}
           />
         ))}

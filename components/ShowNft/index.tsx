@@ -5,6 +5,7 @@ type nft = {
   address: string;
   tokenId: string;
   desc?: string;
+  owner:boolean;
 }[];
 
 type nftCollection = {
