@@ -2,9 +2,16 @@ import NftItem from "../NftItem";
 
 type Props = {
   collectionName: string;
-  items: { title: string; img: string }[];
+  items: {
+    title: string;
+    img?: string;
+    address: string;
+    tokenId: string;
+    desc?: string;
+  }[];
 };
-const NftContainer = ({collectionName,items}: Props) => {
+const NftContainer = ({ collectionName, items }: Props) => {
+
   return (
     <div className="py-[3rem]">
       <div className="flex">
@@ -15,7 +22,14 @@ const NftContainer = ({collectionName,items}: Props) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 ">
         {items.map((nft, i) => (
-          <NftItem title={nft.title} img={nft.img} key={i} />
+          <NftItem
+            title={nft.title}
+            img={nft.img}
+            desc={nft.desc}
+            address={nft.address}
+            tokenId={nft.tokenId}
+            key={i}
+          />
         ))}
       </div>
     </div>

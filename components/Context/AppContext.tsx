@@ -9,7 +9,7 @@ type Props = {
   children?: React.ReactNode;
 };
 export function AppWrapper({ children }: Props) {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const colorTheme = theme === "dark" ? "light" : "dark";
   const setDarkHandler: () => void = () => {
     localStorage.setItem("theme", colorTheme);
@@ -27,8 +27,8 @@ export function AppWrapper({ children }: Props) {
     }
     if (localStorage.getItem("theme") === null) {
       console.log("no window");
-      setTheme("light");
-      localStorage.setItem("theme", "light");
+      setTheme("dark");
+      localStorage.setItem("theme", "dark");
     }
   }, []);
   const values: Theme = { theme, setDarkHandler };

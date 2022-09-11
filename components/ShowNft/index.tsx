@@ -1,10 +1,25 @@
 import NftContainer from "./NftContainer";
+type nft = {
+  title: string;
+  img?: string;
+  address: string;
+  tokenId: string;
+  desc?: string;
+}[];
 
-type Props = {};
-const ShowNft = ({}: Props) => {
+type nftCollection = {
+  collectionName: string;
+  items: nft;
+}[];
+type Props = { userNft: nft };
+const ShowNft = ({ userNft }: Props) => {
+  const nftCollection: nftCollection = [
+    { collectionName: "Learn Web 3", items: filter(userNft, "lw3") },
+    { collectionName: "Buildspace", items: filter(userNft, "buildspace") },
+  ];
   return (
     <div>
-      {collection.map((data, i) => (
+      {nftCollection.map((data, i) => (
         <NftContainer
           key={i}
           collectionName={data.collectionName}
@@ -15,52 +30,18 @@ const ShowNft = ({}: Props) => {
   );
 };
 
-const collection: {
-  collectionName: string;
-  items: { title: string; img: string }[];
-}[] = [
-  {
-    collectionName: "Learn web 3 Dao",
-    items: [
-      {
-        title: "Sophomore Graduate 🎓",
-        img: "https://lh3.googleusercontent.com/DpAt0fCxyOO68sUC4bVwTltG3GQ72BJQU9JXoxKguzDnDR9vfdqBWF633cFWP72_wxDl5f6BFh9k-JeSsUllSfHfxU_8hPEwIrwTS7E=w600",
-      },
-      {
-        title: "Sophomore Graduate 🎓",
-        img: "https://lh3.googleusercontent.com/NK5AN5NSqoWkFZEOckUxbzn66KVSqA2F13fFlIAlEJgHreAZCtmYYLn6NgD9OuHpcKR-_Tfb4RnVcOCRJIed1vbUEzw7De5YklkmXQ=w600",
-      },
-      {
-        title: "Sophomore Graduate 🎓",
-        img: "https://lh3.googleusercontent.com/DpAt0fCxyOO68sUC4bVwTltG3GQ72BJQU9JXoxKguzDnDR9vfdqBWF633cFWP72_wxDl5f6BFh9k-JeSsUllSfHfxU_8hPEwIrwTS7E=w600",
-      },
-      {
-        title: "Sophomore Graduate 🎓",
-        img: "https://lh3.googleusercontent.com/NK5AN5NSqoWkFZEOckUxbzn66KVSqA2F13fFlIAlEJgHreAZCtmYYLn6NgD9OuHpcKR-_Tfb4RnVcOCRJIed1vbUEzw7De5YklkmXQ=w600",
-      },
-    ],
-  },
-  {
-    collectionName: "Buildspace",
-    items: [
-      {
-        title: "Sophomore Graduate 🎓",
-        img: "https://lh3.googleusercontent.com/DpAt0fCxyOO68sUC4bVwTltG3GQ72BJQU9JXoxKguzDnDR9vfdqBWF633cFWP72_wxDl5f6BFh9k-JeSsUllSfHfxU_8hPEwIrwTS7E=w600",
-      },
-      {
-        title: "Sophomore Graduate 🎓",
-        img: "https://lh3.googleusercontent.com/NK5AN5NSqoWkFZEOckUxbzn66KVSqA2F13fFlIAlEJgHreAZCtmYYLn6NgD9OuHpcKR-_Tfb4RnVcOCRJIed1vbUEzw7De5YklkmXQ=w600",
-      },
-      {
-        title: "Sophomore Graduate 🎓",
-        img: "https://lh3.googleusercontent.com/DpAt0fCxyOO68sUC4bVwTltG3GQ72BJQU9JXoxKguzDnDR9vfdqBWF633cFWP72_wxDl5f6BFh9k-JeSsUllSfHfxU_8hPEwIrwTS7E=w600",
-      },
-      {
-        title: "Sophomore Graduate 🎓",
-        img: "https://lh3.googleusercontent.com/NK5AN5NSqoWkFZEOckUxbzn66KVSqA2F13fFlIAlEJgHreAZCtmYYLn6NgD9OuHpcKR-_Tfb4RnVcOCRJIed1vbUEzw7De5YklkmXQ=w600",
-      },
-    ],
-  },
-];
+const filter: (a: nft, b: string) => nft = (a, b) => {
+  if (b === "lw3") {
+    const filteredItems = a.filter(
+      (item) => item.address === "0x1ed25648382c2e6da067313e5dacb4f138bc8b33"
+    );
+    return filteredItems;
+  } else {
+    const filteredItems = a.filter(
+      (item) => item.address === "0x3cd266509d127d0eac42f4474f57d0526804b44e"
+    );
+    return filteredItems;
+  }
+};
 
 export default ShowNft;
