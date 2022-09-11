@@ -89,10 +89,10 @@ const Home: NextPage = () => {
             // Contract address
             // Flag to omit metadata
             const omitMetadata = false;
-
             // Get all NFTs
             const response = await alchemy.nft.getNftsForContract(i, {
               omitMetadata: omitMetadata,
+              pageSize: 20,
             });
             const mutatedArray = response.nfts.map((item) => {
               return {
@@ -116,7 +116,6 @@ const Home: NextPage = () => {
             }
           };
           runMain();
-          console.log("mutated", collectionNftArray);
         }
       };
       if (activeClass === "my-nft") {
@@ -130,7 +129,6 @@ const Home: NextPage = () => {
       setUserNft([]);
     }
   }, [address, activeClass]);
-
   return (
     <div className="min-h-screen min-w-full dark:bg-[#1C1127] bg-slate-50 prose dark:prose-invert transition-colors duration-150">
       <div className="px-[10%]">

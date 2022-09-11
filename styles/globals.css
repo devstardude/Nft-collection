@@ -34,13 +34,20 @@ a {
 }
 
 .PurpleBorderButton {
-  @apply border-2 dark:hover:bg-[#9b53ff42] hover:bg-[#8935ff] dark:border-[#8935ff] border-[#ab6fff] dark:text-white hover:text-white transition-colors duration-200 cursor-pointer;
+  @apply border-2 dark:hover:bg-[#9b53ff42] hover:bg-slate-200 dark:border-[#8935ff] border-slate-700 dark:text-white transition-colors duration-200 cursor-pointer;
+}
+.BlackBorderButton {
+  @apply border-2 dark:hover:bg-[#9b53ff42] hover:bg-[#8935ff8d] dark:border-[#8935ff] border-[#ab6fff] dark:text-white hover:text-white transition-colors duration-200 cursor-pointer;
 }
 
 .PurpleInactiveButton {
-  @apply border-2 dark:hover:bg-[#9b53ff42] hover:bg-[#8935ff] dark:border-[#8935ff] border-slate-700 dark:text-white hover:text-white transition-colors duration-200 cursor-pointer px-4 py-1 ;
+  @apply border-2 dark:hover:bg-[#9b53ff42] hover:bg-[#8935ff] dark:border-[#8935ff] border-slate-700 dark:text-white hover:text-white transition-colors duration-200 cursor-pointer px-4 py-1;
 }
 
 .PurpleActiveButton {
-  @apply border-2 bg-[#8935ff] dark:border-[#8935ff] border-slate-700 text-white  transition-colors duration-200 cursor-pointer px-4 py-1 ;
+  @apply border-2 bg-[#8935ff] dark:border-[#8935ff] border-slate-700 text-white  transition-colors duration-200 cursor-pointer px-4 py-1;
+}
+
+.Tooltip {
+  @apply absolute hidden group-hover:flex -top-2 -right-20 lg:-left-5 lg:-top-2 -translate-y-full px-2 py-4 bg-[#8935ff] rounded-lg text-center text-white text-sm after:content-[''] after:absolute after:left-1/2 after:top-[100%] after:-translate-x-1/2 after:border-8 after:border-x-transparent after:border-b-transparent after:border-t-gray-700 min-w-[100px] lg:min-w-[300px];
 }
