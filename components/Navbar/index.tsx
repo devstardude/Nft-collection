@@ -2,14 +2,16 @@ import { useAppContext } from "../Context/AppContext";
 import { BsSun, BsMoonStars } from "react-icons/bs";
 type Props = {
   connect: () => void;
+  activeClass: string;
   address: string | null;
+  setActiveClass: (agr0: string) => any;
 };
-const Navbar = ({ connect, address  }: Props) => {
+const Navbar = ({ connect, address, activeClass, setActiveClass }: Props) => {
   const mycontext = useAppContext();
   const theme = mycontext?.theme;
   return (
-    <div className="Center pt-[2rem]">
-      <div className="flex items-center w-full h-[65px] rounded-full border-2 px-5 dark:border-[#8935ff] border-slate-700 bg-slate-200 dark:bg-[#9b53ff42]">
+    <div className="Center flex-col pt-[2rem]">
+      <div className="PurpleBorderDiv flex items-center w-full h-[65px] rounded-full px-5 ">
         <div className="Center h-full">
           <img
             className="w-[150px] invert dark:invert-0"
@@ -25,7 +27,7 @@ const Navbar = ({ connect, address  }: Props) => {
         <div className="flex gap-2">
           <div
             onClick={connect}
-            className="Center border-2  rounded-full px-4 dark:hover:bg-[#9b53ff42] hover:bg-[#8935ff] dark:text-white hover:text-white transition-colors duration-200 cursor-pointer dark:border-[#8935ff] border-[#ab6fff]"
+            className="PurpleBorderButton Center rounded-full px-4  "
           >
             <h4 className="NoPad font-thin text-inherit">
               {address ? address : "Connect Wallet"}
@@ -33,12 +35,36 @@ const Navbar = ({ connect, address  }: Props) => {
           </div>
           <div
             onClick={mycontext?.setDarkHandler}
-            className="Center border-2 dark:border-[#8935ff] hover:text-white  hover:bg-[#8935ff] rounded-full w-9 h-9 dark:text-white dark:hover:bg-[#9b53ff42] transition-colors duration-200 cursor-pointer border-[#ab6fff]"
+            className="PurpleBorderButton Center rounded-full w-9 h-9"
           >
             {theme == "dark" ? <BsSun /> : <BsMoonStars />}
           </div>
         </div>
       </div>
+      {address && (
+        <div className="pt-[2rem] flex">
+          <div
+            onClick={() => setActiveClass("my-nft")}
+            className={`${
+              activeClass === "my-nft"
+                ? "PurpleActiveButton"
+                : "PurpleInactiveButton"
+            } rounded-l-full`}
+          >
+            My NFTs
+          </div>
+          <div
+            onClick={() => setActiveClass("all-nft")}
+            className={`${
+              activeClass === "all-nft"
+                ? "PurpleActiveButton"
+                : "PurpleInactiveButton"
+            } rounded-r-full`}
+          >
+            All NFTs
+          </div>
+        </div>
+      )}
     </div>
   );
 };

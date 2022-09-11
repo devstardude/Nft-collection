@@ -22,10 +22,16 @@ const Home: NextPage = () => {
     tokenId: string;
     desc?: string;
   }[];
+
   const [userNft, setUserNft] = useState<userNftType>([]);
+  const [collectionNft, setCollectionNft] = useState<userNftType>([]);
+  const [activeClass, setActiveClass] = useState<string>("my-nft");
   const connectWithMetamask = useMetamask();
   const address = useAddress();
 
+  const setActiveClassHandler: (arg0: string) => void = (activeClassName) => {
+    setActiveClass(activeClassName);
+  };
   useEffect(() => {
     if (address) {
       //Nft of user
@@ -72,17 +78,65 @@ const Home: NextPage = () => {
         }
       };
 
-      NftOfUserRun();
+      const getCollectionNft = () => {
+        const addresses: string[] = [
+          "0x1ed25648382c2e6da067313e5dacb4f138bc8b33",
+          "0x3cd266509d127d0eac42f4474f57d0526804b44e",
+        ];
+        let collectionNftArray: userNftType = [];
+        for (let i of addresses) {
+          const main = async () => {
+            // Contract address
+            // Flag to omit metadata
+            const omitMetadata = false;
+
+            // Get all NFTs
+            const response = await alchemy.nft.getNftsForContract(i, {
+              omitMetadata: omitMetadata,
+            });
+            const mutatedArray = response.nfts.map((item) => {
+              return {
+                title: item.title,
+                img: item.media[0].gateway,
+                address: item.contract.address,
+                tokenId: item.tokenId,
+                desc: item.rawMetadata?.description,
+              };
+            });
+
+            collectionNftArray = [...collectionNftArray, ...mutatedArray];
+          };
+          const runMain = async () => {
+            try {
+              await main();
+              setUserNft(collectionNftArray);
+              console.log("mutated-1", collectionNftArray);
+            } catch (error) {
+              console.log(error);
+            }
+          };
+          runMain();
+          console.log("mutated", collectionNftArray);
+        }
+      };
+      if (activeClass === "my-nft") {
+        NftOfUserRun();
+      } else {
+        getCollectionNft();
+      }
     }
+
     if (!address) {
       setUserNft([]);
     }
-  }, [address]);
+  }, [address, activeClass]);
 
   return (
     <div className="min-h-screen min-w-full dark:bg-[#1C1127] bg-slate-50 prose dark:prose-invert transition-colors duration-150">
       <div className="px-[10%]">
         <Navbar
+          setActiveClass={setActiveClassHandler}
+          activeClass={activeClass}
           address={address ? truncateEthAddress(address) : null}
           connect={connectWithMetamask}
         />

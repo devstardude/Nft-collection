@@ -7,7 +7,7 @@ type Props = {
 };
 const NftItem = ({ title, img, desc }: Props) => {
   return (
-    <div className="cursor-pointer dark:hover:bg-[#9b53ff42] hover:bg-slate-200 rounded-[2.3rem] border-2 dark:border-[#8935ff] border-slate-600 p-4 w-[20rem] mb-4 transition-all duration-300 overflow-clip">
+    <div className="PurpleBorderButton rounded-[2.3rem] p-4 w-[20rem] mb-4 transition-all duration-300 overflow-clip">
       <div className="w-full h-[250px] rounded-[2.5rem] overflow-clip">
         {getExtention(img) === "mp4" ? (
           <video

@@ -15,7 +15,7 @@ const NftContainer = ({ collectionName, items }: Props) => {
   return (
     <div className="py-[3rem]">
       <div className="flex">
-        <h1 className="dark:border-[#8935ff] border-slate-600 border-2 bg-slate-200 dark:bg-[#9b53ff42] px-6 py-3 rounded-[1.3rem]">
+        <h1 className="PurpleBorderDiv px-6 py-3 rounded-[1.3rem]">
           {collectionName}
         </h1>
       </div>
