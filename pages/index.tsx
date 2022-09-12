@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import truncateEthAddress from "truncate-eth-address";
 import { useAddress, useMetamask } from "@thirdweb-dev/react";
 import { Alchemy, Network } from "alchemy-sdk";
+import { useNetworkMismatch } from "@thirdweb-dev/react";
 
 const config = {
   apiKey: "FPpiQ92seWA0Lv3_Z15TP7hIBATvaVxH",
@@ -21,14 +22,14 @@ const Home: NextPage = () => {
     address: string;
     tokenId: string;
     desc?: string;
-    owner:boolean
+    owner: boolean;
   }[];
 
   const [userNft, setUserNft] = useState<userNftType>([]);
   const [activeClass, setActiveClass] = useState<string>("my-nft");
   const connectWithMetamask = useMetamask();
   const address = useAddress();
-
+  const isMismatched = useNetworkMismatch();
   const setActiveClassHandler: (arg0: string) => void = (activeClassName) => {
     setActiveClass(activeClassName);
   };
@@ -60,7 +61,7 @@ const Home: NextPage = () => {
             address: item.contract.address,
             tokenId: item.tokenId,
             desc: item.rawMetadata?.description,
-            owner:true
+            owner: true,
           };
         });
         setUserNft(() => [...fetchedNft]);
@@ -102,7 +103,7 @@ const Home: NextPage = () => {
                 address: item.contract.address,
                 tokenId: item.tokenId,
                 desc: item.rawMetadata?.description,
-                owner:false
+                owner: false,
               };
             });
 
@@ -134,13 +135,14 @@ const Home: NextPage = () => {
   return (
     <div className="min-h-screen min-w-full dark:bg-[#1C1127] bg-slate-50 prose dark:prose-invert transition-colors duration-150">
       <div className="px-[10%]">
+        <div>{isMismatched && <p className="pt-2 m-0 text-red-500 text-center">Please connect to Polygon Mainnet</p>}</div>
         <Navbar
           setActiveClass={setActiveClassHandler}
           activeClass={activeClass}
           address={address ? truncateEthAddress(address) : null}
           connect={connectWithMetamask}
         />
-        {address ? (
+        {address && !isMismatched ? (
           <ShowNft userNft={userNft} />
         ) : (
           <SignIn connect={connectWithMetamask} />
