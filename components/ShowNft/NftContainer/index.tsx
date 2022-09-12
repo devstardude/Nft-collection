@@ -1,5 +1,9 @@
 import NftItem from "../NftItem";
 
+type pageKeyType = {
+  address: string;
+  pageKey: string | undefined;
+}[];
 type Props = {
   collectionName: string;
   items: {
@@ -8,11 +12,23 @@ type Props = {
     address: string;
     tokenId: string;
     desc?: string;
-    owner:boolean
+    owner: boolean;
   }[];
+  pageKey: pageKeyType;
+  address: string;
+  showMoreNft: (pageKey: string | undefined) => any;
 };
-const NftContainer = ({ collectionName, items }: Props) => {
-
+const NftContainer = ({
+  collectionName,
+  items,
+  pageKey,
+  address,
+  showMoreNft,
+}: Props) => {
+  const lowcaseAddress = "0x" + address.substring(2).toLowerCase();
+  const showMore: pageKeyType = pageKey.filter(
+    (i) => i.address === address || i.address === lowcaseAddress
+  );
   return (
     <div className="py-[3rem]">
       <div className="flex">
@@ -34,6 +50,16 @@ const NftContainer = ({ collectionName, items }: Props) => {
           />
         ))}
       </div>
+      {showMore[0]?.pageKey !== undefined && (
+        <div className="mt-5  Center">
+          <p
+            onClick={() => showMoreNft(showMore[0].pageKey)}
+            className="PurpleBorderDiv px-4 py-2 rounded-[2.3rem] cursor-pointer"
+          >
+            Show More
+          </p>
+        </div>
+      )}
     </div>
   );
 };

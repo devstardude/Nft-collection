@@ -5,77 +5,89 @@ const config = {
 };
 const alchemy = new Alchemy(config);
 
-type userNftType = {
-  title: string;
-  img?: string;
-  address: string;
-  tokenId: string;
-  desc?: string;
-  owner: boolean;
-};
-[] || [];
-
 export const fetchUserNft = async (
   userAddress: string,
   contractAddress: string[],
-  pageKey?: string
-): Promise<
-  | {
-      title: string;
-      img: string;
-      address: string;
-      tokenId: string;
-      desc: string | undefined;
-      owner: boolean;
-    }[]
-> => {
-  const nextPageKey = pageKey ? pageKey : "";
-  const GetNftsForOwnerOptions: {
-    withMetadata: boolean;
-    pageKey: string;
-    contractAddresses: string[];
-  } = {
-    withMetadata: false,
-    pageKey: nextPageKey,
-    contractAddresses: contractAddress,
-  };
-  const nfts = await alchemy.nft.getNftsForOwner(
-    userAddress,
-    GetNftsForOwnerOptions
-  );
-  const fetchedNft = nfts.ownedNfts.map((item) => {
-    return {
-      title: item.title,
-      img: item.media[0].gateway,
-      address: item.contract.address,
-      tokenId: item.tokenId,
-      desc: item.rawMetadata?.description,
-      owner: true,
+  pageKey?: string | undefined
+): Promise<{
+  nftCollection: {
+    title: string;
+    img: string;
+    address: string;
+    tokenId: string;
+    desc: string | undefined;
+    owner: boolean;
+  }[];
+  pageKey: { address: string; pageKey: string | undefined }[];
+}> => {
+  let collectionNftArray: any = [];
+  let pageKeyArray: any = [];
+  for (let i of contractAddress) {
+    const GetNftsForOwnerOptions: {
+      withMetadata: boolean;
+      pageKey: string | undefined;
+      contractAddresses: string[];
+      pageSize: number;
+    } = {
+      withMetadata: true,
+      pageKey: pageKey,
+      contractAddresses: [i],
+      pageSize: 5,
     };
-  });
-  return fetchedNft;
+    const response = await alchemy.nft.getNftsForOwner(
+      userAddress,
+      GetNftsForOwnerOptions
+    );
+    const mutatedArray = response.ownedNfts.map((item) => {
+      return {
+        title: item.title,
+        img: item.media[0].gateway,
+        address: item.contract.address,
+        tokenId: item.tokenId,
+        desc: item.rawMetadata?.description,
+        owner: true,
+      };
+    });
+
+    collectionNftArray = [...collectionNftArray, ...mutatedArray];
+
+    pageKeyArray = [
+      ...pageKeyArray,
+      {
+        address: i,
+        pageKey: response.pageKey,
+      },
+    ];
+  }
+
+  return {
+    nftCollection: collectionNftArray,
+    pageKey: pageKeyArray,
+  };
 };
 
 export const fetchCollection = async (
   addressArray: string[],
   pageKey?: string
-): Promise<
-  | {
-      title: string;
-      img: string;
-      address: string;
-      tokenId: string;
-      desc: string | undefined;
-      owner: boolean;
-    }[]
-> => {
+): Promise<{
+  nftCollection: {
+    title: string;
+    img: string;
+    address: string;
+    tokenId: string;
+    desc: string | undefined;
+    owner: boolean;
+  }[];
+  pageKey: { address: string; pageKey: string|undefined }[];
+}> => {
   const nextPageKey = pageKey ? pageKey : "";
   let collectionNftArray: any = [];
+  let pageKeyArray: any = [];
   for (let i of addressArray) {
     const omitMetadata = false;
     const response = await alchemy.nft.getNftsForContract(i, {
       omitMetadata: omitMetadata,
-      pageSize: 20,
+      pageSize: 2,
       pageKey: nextPageKey,
     });
     const mutatedArray = response.nfts.map((item) => {
@@ -90,6 +102,16 @@ export const fetchCollection = async (
     });
 
     collectionNftArray = [...collectionNftArray, ...mutatedArray];
+    pageKeyArray = [
+      ...pageKeyArray,
+      {
+        address: i,
+        pageKey: response.pageKey,
+      },
+    ];
   }
-  return collectionNftArray;
+  return {
+    nftCollection: collectionNftArray,
+    pageKey: pageKeyArray,
+  };
 };

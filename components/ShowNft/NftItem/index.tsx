@@ -129,3 +129,11 @@ const getExtention: (url: any) => any = (url) => {
 };
 
 export default NftItem;
+
+
+// const response ={}
+//   nftaddress:{
+//     pageKey:"",
+//     nftCollection:[]
+//   }
+// }

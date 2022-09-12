@@ -7,7 +7,7 @@ import SignIn from "../components/SignIn";
 import { useEffect, useState } from "react";
 import truncateEthAddress from "truncate-eth-address";
 import { useAddress, useMetamask } from "@thirdweb-dev/react";
-import { Alchemy, Network } from "alchemy-sdk";
+import { Network } from "alchemy-sdk";
 import { useNetworkMismatch } from "@thirdweb-dev/react";
 import { fetchUserNft, fetchCollection } from "../utils/fetchApi";
 
@@ -15,7 +15,6 @@ const config = {
   apiKey: "FPpiQ92seWA0Lv3_Z15TP7hIBATvaVxH",
   network: Network.MATIC_MAINNET,
 };
-const alchemy = new Alchemy(config);
 const Home: NextPage = () => {
   type userNftType = {
     title: string;
@@ -25,15 +24,23 @@ const Home: NextPage = () => {
     desc?: string;
     owner: boolean;
   }[];
-
+  type pageKeyType = {
+    address: string;
+    pageKey: string | undefined;
+  }[];
   const [userNft, setUserNft] = useState<userNftType>([]);
   const [collectionNft, setCollectionNft] = useState<userNftType>([]);
+  const [userPageKey, setUserPageKey] = useState<pageKeyType>([]);
+  const [collectionPageKey, setCollectionPageKey] = useState<pageKeyType>([]);
   const [activeClass, setActiveClass] = useState<string>("my-nft");
   const connectWithMetamask = useMetamask();
   const address = useAddress();
   const isMismatched = useNetworkMismatch();
   const setActiveClassHandler: (arg0: string) => void = (activeClassName) => {
     setActiveClass(activeClassName);
+  };
+  const showMoreNftHandler = (key: string | undefined) => {
+    console.log(key);
   };
   useEffect(() => {
     if (address) {
@@ -45,7 +52,8 @@ const Home: NextPage = () => {
             "0x3CD266509D127d0Eac42f4474F57D0526804b44e",
           ]
         );
-        setUserNft(newRes);
+        setUserNft(newRes.nftCollection);
+        setUserPageKey(newRes.pageKey);
       };
       fetchNewUserNft();
 
@@ -56,7 +64,8 @@ const Home: NextPage = () => {
           "0x3cd266509d127d0eac42f4474f57d0526804b44e",
         ];
         const newRes = await fetchCollection(addresses);
-        setCollectionNft(newRes);
+        setCollectionNft(newRes.nftCollection);
+        setCollectionPageKey(newRes.pageKey);
       };
       fetchCollectionNft();
     }
@@ -82,7 +91,9 @@ const Home: NextPage = () => {
         />
         {address && !isMismatched ? (
           <ShowNft
+            pageKey={activeClass === "my-nft" ? userPageKey : collectionPageKey}
             userNft={activeClass === "my-nft" ? userNft : collectionNft}
+            showMoreNft={showMoreNftHandler}
           />
         ) : (
           <SignIn connect={connectWithMetamask} />

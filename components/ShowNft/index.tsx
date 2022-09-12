@@ -5,18 +5,35 @@ type nft = {
   address: string;
   tokenId: string;
   desc?: string;
-  owner:boolean;
+  owner: boolean;
 }[];
 
 type nftCollection = {
   collectionName: string;
   items: nft;
+  address: string;
 }[];
-type Props = { userNft: nft };
-const ShowNft = ({ userNft }: Props) => {
+type pageKeyType = {
+  address: string;
+  pageKey: string | undefined;
+}[];
+type Props = {
+  userNft: nft;
+  pageKey: pageKeyType;
+  showMoreNft: (pageKey: string | undefined) => any;
+};
+const ShowNft = ({ userNft, pageKey, showMoreNft }: Props) => {
   const nftCollection: nftCollection = [
-    { collectionName: "Learn Web 3", items: filter(userNft, "lw3") },
-    { collectionName: "Buildspace", items: filter(userNft, "buildspace") },
+    {
+      collectionName: "Learn Web 3",
+      address: "0x1Ed25648382c2e6Da067313e5DAcb4F138Bc8b33",
+      items: filter(userNft, "lw3"),
+    },
+    {
+      collectionName: "Buildspace",
+      address: "0x3CD266509D127d0Eac42f4474F57D0526804b44e",
+      items: filter(userNft, "buildspace"),
+    },
   ];
   return (
     <div>
@@ -25,6 +42,9 @@ const ShowNft = ({ userNft }: Props) => {
           key={i}
           collectionName={data.collectionName}
           items={data.items}
+          pageKey={pageKey}
+          address={data.address}
+          showMoreNft={showMoreNft}
         />
       ))}
     </div>
