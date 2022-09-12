@@ -64,12 +64,14 @@ const Home: NextPage = () => {
       fetchNewUserNft();
     } else {
       const fetchCollectionNft = async () => {
-        const addresses: string[] = [contractAddress];
-        const newRes = await fetchCollection(addresses);
+        const lowcaseAddress =
+          "0x" + contractAddress.substring(2).toLowerCase();
+        const addresses: string[] = [lowcaseAddress];
+        const newRes = await fetchCollection(addresses, key);
         setCollectionNft((prev) => [...prev, ...newRes.nftCollection]);
         setCollectionPageKey((prev) => {
           const objIndex = prev.findIndex(
-            (obj) => obj.address == contractAddress
+            (obj) => obj.address == contractAddress|| obj.address == lowcaseAddress
           );
           const newPageKeyArray = [...prev];
           newPageKeyArray[objIndex].pageKey = newRes.pageKey[0].pageKey;

@@ -50,7 +50,7 @@ const NftContainer = ({
           />
         ))}
       </div>
-      {showMore[0]?.pageKey !== undefined && (
+      {showMore[0] && showMore[0].pageKey !== undefined && (
         <div className="mt-5  Center">
           <p
             onClick={() => showMoreNft(address, showMore[0].pageKey)}
