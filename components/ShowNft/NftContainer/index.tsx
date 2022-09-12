@@ -16,7 +16,7 @@ type Props = {
   }[];
   pageKey: pageKeyType;
   address: string;
-  showMoreNft: (pageKey: string | undefined) => any;
+  showMoreNft: (address: string, pageKey: string | undefined) => any;
 };
 const NftContainer = ({
   collectionName,
@@ -53,7 +53,7 @@ const NftContainer = ({
       {showMore[0]?.pageKey !== undefined && (
         <div className="mt-5  Center">
           <p
-            onClick={() => showMoreNft(showMore[0].pageKey)}
+            onClick={() => showMoreNft(address, showMore[0].pageKey)}
             className="PurpleBorderDiv px-4 py-2 rounded-[2.3rem] cursor-pointer"
           >
             Show More

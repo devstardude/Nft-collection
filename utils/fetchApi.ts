@@ -32,7 +32,7 @@ export const fetchUserNft = async (
       withMetadata: true,
       pageKey: pageKey,
       contractAddresses: [i],
-      pageSize: 5,
+      pageSize: 10,
     };
     const response = await alchemy.nft.getNftsForOwner(
       userAddress,
@@ -87,7 +87,7 @@ export const fetchCollection = async (
     const omitMetadata = false;
     const response = await alchemy.nft.getNftsForContract(i, {
       omitMetadata: omitMetadata,
-      pageSize: 2,
+      pageSize: 20,
       pageKey: nextPageKey,
     });
     const mutatedArray = response.nfts.map((item) => {

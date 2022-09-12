@@ -28,6 +28,7 @@ const Home: NextPage = () => {
     address: string;
     pageKey: string | undefined;
   }[];
+  const fakeUserAddress = "0x4A40Eb870DcF533D4dC097c3d87aaFE9f64490A1";
   const [userNft, setUserNft] = useState<userNftType>([]);
   const [collectionNft, setCollectionNft] = useState<userNftType>([]);
   const [userPageKey, setUserPageKey] = useState<pageKeyType>([]);
@@ -39,19 +40,52 @@ const Home: NextPage = () => {
   const setActiveClassHandler: (arg0: string) => void = (activeClassName) => {
     setActiveClass(activeClassName);
   };
-  const showMoreNftHandler = (key: string | undefined) => {
-    console.log(key);
+  const showMoreNftHandler = (
+    contractAddress: string,
+    key: string | undefined
+  ) => {
+    if (activeClass === "my-nft" && address) {
+      const fetchNewUserNft = async () => {
+        const newRes = await fetchUserNft(
+          fakeUserAddress,
+          [contractAddress],
+          key
+        );
+        setUserNft((prev) => [...prev, ...newRes.nftCollection]);
+        setUserPageKey((prev) => {
+          const objIndex = prev.findIndex(
+            (obj) => obj.address == contractAddress
+          );
+          const newPageKeyArray = [...prev];
+          newPageKeyArray[objIndex].pageKey = newRes.pageKey[0].pageKey;
+          return newPageKeyArray;
+        });
+      };
+      fetchNewUserNft();
+    } else {
+      const fetchCollectionNft = async () => {
+        const addresses: string[] = [contractAddress];
+        const newRes = await fetchCollection(addresses);
+        setCollectionNft((prev) => [...prev, ...newRes.nftCollection]);
+        setCollectionPageKey((prev) => {
+          const objIndex = prev.findIndex(
+            (obj) => obj.address == contractAddress
+          );
+          const newPageKeyArray = [...prev];
+          newPageKeyArray[objIndex].pageKey = newRes.pageKey[0].pageKey;
+          return newPageKeyArray;
+        });
+      };
+      fetchCollectionNft();
+    }
   };
   useEffect(() => {
     if (address) {
       const fetchNewUserNft = async () => {
-        const newRes = await fetchUserNft(
-          "0x4A40Eb870DcF533D4dC097c3d87aaFE9f64490A1",
-          [
-            "0x1Ed25648382c2e6Da067313e5DAcb4F138Bc8b33",
-            "0x3CD266509D127d0Eac42f4474F57D0526804b44e",
-          ]
-        );
+        const newRes = await fetchUserNft(fakeUserAddress, [
+          "0x1Ed25648382c2e6Da067313e5DAcb4F138Bc8b33",
+          "0x3CD266509D127d0Eac42f4474F57D0526804b44e",
+        ]);
         setUserNft(newRes.nftCollection);
         setUserPageKey(newRes.pageKey);
       };

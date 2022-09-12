@@ -20,7 +20,7 @@ type pageKeyType = {
 type Props = {
   userNft: nft;
   pageKey: pageKeyType;
-  showMoreNft: (pageKey: string | undefined) => any;
+  showMoreNft: (address: string, pageKey: string | undefined) => any;
 };
 const ShowNft = ({ userNft, pageKey, showMoreNft }: Props) => {
   const nftCollection: nftCollection = [
