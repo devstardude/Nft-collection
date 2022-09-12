@@ -21,22 +21,10 @@ type Props = {
   owner: boolean;
 };
 const NftItem = ({ title, img, desc, address, tokenId, owner }: Props) => {
-  {
-    console.log("yo", owner);
-  }
   return (
     <div className="PurpleBorderButton rounded-[2.3rem] p-4 w-[20rem] mb-4 transition-all duration-300 ">
       <div className="w-full h-[250px] rounded-[2.5rem] overflow-clip">
         {getExtention(img) === "mp4" ? (
-          // <video
-          //   autoPlay
-          //   muted
-          //   loop
-          //   className="p-0 m-0 h-full w-full object-cover"
-          // >
-          //   <source src={img} type="video/mp4" />
-          //   Sorry, your browser doesn't support embedded videos.
-          // </video>
           <ImageDiv
             image={img}
             link={`https://opensea.io/assets/matic/${address}/${tokenId}`}
