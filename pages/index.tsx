@@ -71,7 +71,8 @@ const Home: NextPage = () => {
         setCollectionNft((prev) => [...prev, ...newRes.nftCollection]);
         setCollectionPageKey((prev) => {
           const objIndex = prev.findIndex(
-            (obj) => obj.address == contractAddress|| obj.address == lowcaseAddress
+            (obj) =>
+              obj.address == contractAddress || obj.address == lowcaseAddress
           );
           const newPageKeyArray = [...prev];
           newPageKeyArray[objIndex].pageKey = newRes.pageKey[0].pageKey;
@@ -110,7 +111,7 @@ const Home: NextPage = () => {
     }
   }, [address]);
   return (
-    <div className="min-h-screen min-w-full dark:bg-[#1C1127] bg-slate-50 prose dark:prose-invert transition-colors duration-150">
+    <div className="min-h-screen min-w-full dark:bg-[#1C1127] bg-slate-50 prose  dark:prose-invert  transition-colors duration-150">
       <div className="px-[10%]">
         <div>
           {isMismatched && (
@@ -135,6 +136,14 @@ const Home: NextPage = () => {
           <SignIn connect={connectWithMetamask} />
         )}
       </div>
+      {address && (
+        <div>
+          <p className="m-0 Center bg-[#7c1effae] py-2 text-[#fff] dark:bg-[#9b53ff42]">
+            {" "}
+            Made by Arun Shekhar
+          </p>
+        </div>
+      )}
     </div>
   );
 };

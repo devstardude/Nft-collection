@@ -12,27 +12,30 @@ const Navbar = ({ connect, address, activeClass, setActiveClass }: Props) => {
   return (
     <div className="Center flex-col pt-[2rem]">
       <div className="PurpleBorderDiv flex items-center w-full h-[65px] rounded-full px-5 ">
-        <div className="Center h-full">
+        <div className="Center h-full hidden flex-grow lg:flex-grow-0">
           <img
-            className="w-[150px] invert dark:invert-0"
+            className="w-[150px] invert dark:invert-0 "
             src="https://learnweb3.io/brand/logo-white.png"
             alt="brand"
           />
         </div>
-        <div className="flex-grow text-center">
+        <div className="flex-grow text-center hidden lg:block">
           <h3 className="NoPad underline decoration-wavy underline-offset-8 decoration-[#8935ff]">
             NFT Collection
           </h3>
         </div>
-        <div className="flex gap-2">
-          <div
-            onClick={connect}
-            className="PurpleBorderButton Center rounded-full px-4  "
-          >
-            <h4 className="NoPad font-thin text-inherit">
-              {address ? address : "Connect Wallet"}
-            </h4>
+        <div className="flex gap-2 ">
+          <div className="hidden lg:flex">
+            <div
+              onClick={connect}
+              className="PurpleBorderButton Center rounded-full px-4 "
+            >
+              <h4 className="NoPad font-thin text-inherit">
+                {address ? address : "Connect Wallet"}
+              </h4>
+            </div>
           </div>
+
           <div
             onClick={mycontext?.setDarkHandler}
             className="PurpleBorderButton Center rounded-full w-9 h-9"
@@ -40,6 +43,11 @@ const Navbar = ({ connect, address, activeClass, setActiveClass }: Props) => {
             {theme == "dark" ? <BsSun /> : <BsMoonStars />}
           </div>
         </div>
+      </div>
+      <div className="flex-grow text-center lg:hidden block pt-4">
+        <h2 className="NoPad underline decoration-wavy underline-offset-8 decoration-[#8935ff]">
+          NFT Collection
+        </h2>
       </div>
       {address && (
         <div className="pt-[2rem] flex">
