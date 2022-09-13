@@ -87,7 +87,7 @@ export const fetchCollection = async (
     const omitMetadata = false;
     const response = await alchemy.nft.getNftsForContract(i, {
       omitMetadata: omitMetadata,
-      pageSize: 1,
+      pageSize: 20,
       pageKey: nextPageKey,
     });
     const mutatedArray = response.nfts.map((item) => {
