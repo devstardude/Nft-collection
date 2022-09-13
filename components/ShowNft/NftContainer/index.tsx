@@ -32,7 +32,7 @@ const NftContainer = ({
   const [show, setShow] = useState<string>("Please wait");
 
   useEffect(() => {
-    let timer1 = setTimeout(() => setShow("No Nfts"), 8000);
+    let timer1 = setTimeout(() => setShow("No Nfts"), 4000);
     return () => {
       clearTimeout(timer1);
     };

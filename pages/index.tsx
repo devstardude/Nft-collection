@@ -41,11 +41,7 @@ const Home: NextPage = () => {
   ) => {
     if (activeClass === "my-nft" && address) {
       const fetchNewUserNft = async () => {
-        const newRes = await fetchUserNft(
-          address,
-          [contractAddress],
-          key
-        );
+        const newRes = await fetchUserNft(address, [contractAddress], key);
         setUserNft((prev) => [...prev, ...newRes.nftCollection]);
         setUserPageKey((prev) => {
           const objIndex = prev.findIndex(
@@ -106,39 +102,50 @@ const Home: NextPage = () => {
     }
   }, [address]);
   return (
-    <div className="min-h-screen min-w-full dark:bg-[#1C1127] bg-slate-50 prose  dark:prose-invert  transition-colors duration-150">
-      <div className="px-[10%]">
-        <div>
-          {isMismatched && (
-            <p className="pt-2 m-0 text-red-500 text-center">
-              Please connect to Polygon Mainnet
-            </p>
+    <div>
+      <Head>
+        <title>NFT | Learn Web 3</title>
+        <meta
+          name="description"
+          content="Fetch User's NFT Task for Learn Web 3"
+        />
+      </Head>
+      <div className="min-h-screen min-w-full dark:bg-[#1C1127] bg-slate-50 prose  dark:prose-invert  transition-colors duration-150">
+        <div className="px-[10%]">
+          <div>
+            {isMismatched && (
+              <p className="pt-2 m-0 text-red-500 text-center">
+                Please connect to Polygon Mainnet
+              </p>
+            )}
+          </div>
+          <Navbar
+            setActiveClass={setActiveClassHandler}
+            activeClass={activeClass}
+            address={address ? truncateEthAddress(address) : null}
+            connect={connectWithMetamask}
+          />
+          {address && !isMismatched ? (
+            <ShowNft
+              pageKey={
+                activeClass === "my-nft" ? userPageKey : collectionPageKey
+              }
+              userNft={activeClass === "my-nft" ? userNft : collectionNft}
+              showMoreNft={showMoreNftHandler}
+            />
+          ) : (
+            <SignIn connect={connectWithMetamask} />
           )}
         </div>
-        <Navbar
-          setActiveClass={setActiveClassHandler}
-          activeClass={activeClass}
-          address={address ? truncateEthAddress(address) : null}
-          connect={connectWithMetamask}
-        />
-        {address && !isMismatched ? (
-          <ShowNft
-            pageKey={activeClass === "my-nft" ? userPageKey : collectionPageKey}
-            userNft={activeClass === "my-nft" ? userNft : collectionNft}
-            showMoreNft={showMoreNftHandler}
-          />
-        ) : (
-          <SignIn connect={connectWithMetamask} />
+        {address && (
+          <div>
+            <p className="m-0 Center bg-[#7c1effae] py-2 text-[#fff] dark:bg-[#9b53ff42]">
+              {" "}
+              Made by Arun Shekhar
+            </p>
+          </div>
         )}
       </div>
-      {address && (
-        <div>
-          <p className="m-0 Center bg-[#7c1effae] py-2 text-[#fff] dark:bg-[#9b53ff42]">
-            {" "}
-            Made by Arun Shekhar
-          </p>
-        </div>
-      )}
     </div>
   );
 };
