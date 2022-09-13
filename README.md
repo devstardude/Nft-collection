@@ -37,6 +37,14 @@ There are two approaches in this app, first approach is on the **Main** branch, 
 
 - Pagination supported
 
+## ⏳ Challanges 
+Here are some challanges I faced during development of this app
+- I wanted to implement pagination feature for both user nfts and collection nfts, but it was a little tricky since Alchemy API sends a page-key in string for a next page, and when it's the last page the page-key is undefined. So it was fun but a little time consuming to mutate the NFT Objects to support this feature
+
+- Programming a concise Dynamic function that serves both as Initial fetching function and pagination function.
+
+- Working with types in TypeScript was also a little time consuming, but in the end it gave a better structure to the codebase with less chances of bugs and unexpected results.
+
 ## ⚙️ Tech Stack
 
 - Next.js with TypeScript
@@ -47,7 +55,9 @@ There are two approaches in this app, first approach is on the **Main** branch, 
 ## 🔗 Website Link
 
 > https://nft-collection-learnweb.vercel.app/
->
+
+
+
 ## Deployment
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
