@@ -1,6 +1,6 @@
 import { Alchemy, Network } from "alchemy-sdk";
 const config = {
-  apiKey: "FPpiQ92seWA0Lv3_Z15TP7hIBATvaVxH",
+  apiKey: process.env.ALCHEMY_API,
   network: Network.MATIC_MAINNET,
 };
 const alchemy = new Alchemy(config);
