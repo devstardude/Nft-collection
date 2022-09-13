@@ -41,7 +41,11 @@ const Home: NextPage = () => {
   ) => {
     if (activeClass === "my-nft" && address) {
       const fetchNewUserNft = async () => {
-        const newRes = await fetchUserNft(address, [contractAddress], key);
+        const newRes = await fetchUserNft(
+          fakeUserAddress,
+          [contractAddress],
+          key
+        );
         setUserNft((prev) => [...prev, ...newRes.nftCollection]);
         setUserPageKey((prev) => {
           const objIndex = prev.findIndex(
