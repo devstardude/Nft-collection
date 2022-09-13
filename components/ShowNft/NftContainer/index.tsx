@@ -1,5 +1,5 @@
 import NftItem from "../NftItem";
-
+import { useEffect, useState } from "react";
 type pageKeyType = {
   address: string;
   pageKey: string | undefined;
@@ -29,6 +29,14 @@ const NftContainer = ({
   const showMore: pageKeyType = pageKey.filter(
     (i) => i.address === address || i.address === lowcaseAddress
   );
+  const [show, setShow] = useState<string>("Please wait");
+
+  useEffect(() => {
+    let timer1 = setTimeout(() => setShow("No Nfts"), 8000);
+    return () => {
+      clearTimeout(timer1);
+    };
+  }, []);
   return (
     <div className="py-[3rem]">
       <div className="flex">
@@ -64,7 +72,7 @@ const NftContainer = ({
             )}
           </div>
         ) : (
-          <p className="min-h-[12rem]">No Nfts to show...</p>
+          <p className="min-h-[12rem]">{show}</p>
         )}
       </div>
     </div>

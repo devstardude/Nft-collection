@@ -7,7 +7,6 @@ import SignIn from "../components/SignIn";
 import { useEffect, useState } from "react";
 import truncateEthAddress from "truncate-eth-address";
 import { useAddress, useMetamask } from "@thirdweb-dev/react";
-import { Network } from "alchemy-sdk";
 import { useNetworkMismatch } from "@thirdweb-dev/react";
 import { fetchUserNft, fetchCollection } from "../utils/fetchApi";
 
