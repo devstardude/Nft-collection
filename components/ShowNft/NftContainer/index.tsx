@@ -36,30 +36,37 @@ const NftContainer = ({
           {collectionName}
         </h1>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 ">
-        {items.map((nft, i) => (
-          <NftItem
-            title={nft.title}
-            img={nft.img}
-            desc={nft.desc}
-            address={nft.address}
-            tokenId={nft.tokenId}
-            owner={nft.owner}
-            key={i}
-          />
-        ))}
+      <div>
+        {items && items.length !== 0 ? (
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 ">
+              {items.map((nft, i) => (
+                <NftItem
+                  title={nft.title}
+                  img={nft.img}
+                  desc={nft.desc}
+                  address={nft.address}
+                  tokenId={nft.tokenId}
+                  owner={nft.owner}
+                  key={i}
+                />
+              ))}
+            </div>
+            {showMore[0] && showMore[0].pageKey !== undefined && (
+              <div className="mt-5  Center">
+                <p
+                  onClick={() => showMoreNft(address, showMore[0].pageKey)}
+                  className="PurpleBorderDiv px-4 py-2 rounded-[2.3rem] cursor-pointer "
+                >
+                  Show More
+                </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <p className="min-h-[12rem]">No Nfts to show...</p>
+        )}
       </div>
-      {showMore[0] && showMore[0].pageKey !== undefined && (
-        <div className="mt-5  Center">
-          <p
-            onClick={() => showMoreNft(address, showMore[0].pageKey)}
-            className="PurpleBorderDiv px-4 py-2 rounded-[2.3rem] cursor-pointer"
-          >
-            Show More
-          </p>
-        </div>
-      )}
     </div>
   );
 };

@@ -11,10 +11,6 @@ import { Network } from "alchemy-sdk";
 import { useNetworkMismatch } from "@thirdweb-dev/react";
 import { fetchUserNft, fetchCollection } from "../utils/fetchApi";
 
-const config = {
-  apiKey: "FPpiQ92seWA0Lv3_Z15TP7hIBATvaVxH",
-  network: Network.MATIC_MAINNET,
-};
 const Home: NextPage = () => {
   type userNftType = {
     title: string;
