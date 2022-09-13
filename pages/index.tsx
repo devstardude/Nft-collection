@@ -76,7 +76,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (address) {
       const fetchNewUserNft = async () => {
-        const newRes = await fetchUserNft(address, [
+        const newRes = await fetchUserNft(fakeUserAddress, [
           "0x1Ed25648382c2e6Da067313e5DAcb4F138Bc8b33",
           "0x3CD266509D127d0Eac42f4474F57D0526804b44e",
         ]);
