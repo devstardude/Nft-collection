@@ -25,14 +25,9 @@ type Props = {
 const ShowNft = ({ userNft, pageKey, showMoreNft }: Props) => {
   const nftCollection: nftCollection = [
     {
-      collectionName: "Learn Web 3",
-      address: "0x1Ed25648382c2e6Da067313e5DAcb4F138Bc8b33",
-      items: filter(userNft, "lw3"),
-    },
-    {
-      collectionName: "Buildspace",
-      address: "0x3CD266509D127d0Eac42f4474F57D0526804b44e",
-      items: filter(userNft, "buildspace"),
+      collectionName: "Custom",
+      address: "0x66C469fb19a2F6dF10262aA39d630A6EF75DBCDf",
+      items: userNft,
     },
   ];
   return (
@@ -49,20 +44,6 @@ const ShowNft = ({ userNft, pageKey, showMoreNft }: Props) => {
       ))}
     </div>
   );
-};
-
-const filter: (a: nft, b: string) => nft = (a, b) => {
-  if (b === "lw3") {
-    const filteredItems = a.filter(
-      (item) => item.address === "0x1ed25648382c2e6da067313e5dacb4f138bc8b33"
-    );
-    return filteredItems;
-  } else {
-    const filteredItems = a.filter(
-      (item) => item.address === "0x3cd266509d127d0eac42f4474f57d0526804b44e"
-    );
-    return filteredItems;
-  }
 };
 
 export default ShowNft;

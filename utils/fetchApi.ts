@@ -1,4 +1,5 @@
 import { Alchemy, Network } from "alchemy-sdk";
+
 const config = {
   apiKey: process.env.ALCHEMY_API,
   network: Network.MATIC_MAINNET,
@@ -32,25 +33,43 @@ export const fetchUserNft = async (
       withMetadata: true,
       pageKey: pageKey,
       contractAddresses: [i],
-      pageSize: 20,
+      pageSize: 40,
     };
     const response = await alchemy.nft.getNftsForOwner(
       userAddress,
       GetNftsForOwnerOptions
     );
-    const mutatedArray = response.ownedNfts.map((item) => {
-      return {
-        title: item.title,
-        img: item.media[0].gateway,
-        address: item.contract.address,
-        tokenId: item.tokenId,
-        desc: item.rawMetadata?.description,
-        owner: true,
+    let mutatedArray: any = [];
+    for (const i of response.ownedNfts) {
+      let urlStringInitial = i.tokenUri?.raw.replace("{id}", i.tokenId);
+      const urlStringFinal = urlStringInitial?.replace(
+        "ipfs://",
+        "https://ipfs.io/ipfs/"
+      );
+      const reponse = async () => {
+        if (urlStringFinal) {
+          const loadNftData = async () => {
+            const response = await fetch(urlStringFinal);
+            const info = await response.json();
+            const nftData = {
+              title: info.name,
+              img: info.image.replace(
+                "ipfs://",
+                "https://gateway.ipfs.io/ipfs/"
+              ),
+              address: i.contract.address,
+              tokenId: i.tokenId,
+              desc: info.description,
+              owner: true,
+            };
+            mutatedArray.push(nftData);
+          };
+          await loadNftData();
+        }
       };
-    });
-
+      await reponse();
+    }
     collectionNftArray = [...collectionNftArray, ...mutatedArray];
-
     pageKeyArray = [
       ...pageKeyArray,
       {
@@ -87,20 +106,40 @@ export const fetchCollection = async (
     const omitMetadata = false;
     const response = await alchemy.nft.getNftsForContract(i, {
       omitMetadata: omitMetadata,
-      pageSize: 20,
+      pageSize: 40,
       pageKey: nextPageKey,
     });
-    const mutatedArray = response.nfts.map((item) => {
-      return {
-        title: item.title,
-        img: item.media[0].gateway,
-        address: item.contract.address,
-        tokenId: item.tokenId,
-        desc: item.rawMetadata?.description,
-        owner: false,
-      };
-    });
+    let mutatedArray: any = [];
+    for (const i of response.nfts) {
+      let urlStringInitial = i.tokenUri?.raw.replace("{id}", i.tokenId);
+      const urlStringFinal = urlStringInitial?.replace(
+        "ipfs://",
+        "https://ipfs.io/ipfs/"
+      );
+      const reponse = async () => {
+        if (urlStringFinal) {
+          const loadNftData = async () => {
+            const response = await fetch(urlStringFinal);
+            const info = await response.json();
 
+            const nftData = {
+              title: info.name,
+              img: info.image.replace(
+                "ipfs://",
+                "https://gateway.ipfs.io/ipfs/"
+              ),
+              address: i.contract.address,
+              tokenId: i.tokenId,
+              desc: info.description,
+              owner: false,
+            };
+            mutatedArray.push(nftData);
+          };
+          await loadNftData();
+        }
+      };
+      await reponse();
+    }
     collectionNftArray = [...collectionNftArray, ...mutatedArray];
     pageKeyArray = [
       ...pageKeyArray,

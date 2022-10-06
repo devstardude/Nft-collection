@@ -23,7 +23,7 @@ const Home: NextPage = () => {
     address: string;
     pageKey: string | undefined;
   }[];
-  const fakeUserAddress = "0x4A40Eb870DcF533D4dC097c3d87aaFE9f64490A1";
+  const fakeUserAddress = "0x68cA18E61e513EFAb164A2Dcd0c182b62adc0283";
   const [userNft, setUserNft] = useState<userNftType>([]);
   const [collectionNft, setCollectionNft] = useState<userNftType>([]);
   const [userPageKey, setUserPageKey] = useState<pageKeyType>([]);
@@ -35,17 +35,13 @@ const Home: NextPage = () => {
   const setActiveClassHandler: (arg0: string) => void = (activeClassName) => {
     setActiveClass(activeClassName);
   };
-  const showMoreNftHandler = (
+  const showMoreNftHandler = async (
     contractAddress: string,
     key: string | undefined
   ) => {
     if (activeClass === "my-nft" && address) {
       const fetchNewUserNft = async () => {
-        const newRes = await fetchUserNft(
-          address,
-          [contractAddress],
-          key
-        );
+        const newRes = await fetchUserNft(address, [contractAddress], key);
         setUserNft((prev) => [...prev, ...newRes.nftCollection]);
         setUserPageKey((prev) => {
           const objIndex = prev.findIndex(
@@ -59,32 +55,33 @@ const Home: NextPage = () => {
       fetchNewUserNft();
     } else {
       const fetchCollectionNft = async () => {
-        const lowcaseAddress =
-          "0x" + contractAddress.substring(2).toLowerCase();
-        const addresses: string[] = [lowcaseAddress];
+        const addresses: string[] = [
+          "0x66C469fb19a2F6dF10262aA39d630A6EF75DBCDf",
+        ];
         const newRes = await fetchCollection(addresses, key);
+        console.log("new res", newRes.pageKey);
+
         setCollectionNft((prev) => [...prev, ...newRes.nftCollection]);
         setCollectionPageKey((prev) => {
+          console.log("prev", prev);
           const objIndex = prev.findIndex(
-            (obj) =>
-              obj.address == contractAddress || obj.address == lowcaseAddress
+            (obj) => obj.address == "0x66C469fb19a2F6dF10262aA39d630A6EF75DBCDf"
           );
           const newPageKeyArray = [...prev];
           newPageKeyArray[objIndex].pageKey = newRes.pageKey[0].pageKey;
+          console.log("new prev", newPageKeyArray);
           return newPageKeyArray;
         });
       };
-      fetchCollectionNft();
+      await fetchCollectionNft();
     }
   };
   useEffect(() => {
     if (address) {
       const fetchNewUserNft = async () => {
         const newRes = await fetchUserNft(address, [
-          "0x1Ed25648382c2e6Da067313e5DAcb4F138Bc8b33",
-          "0x3CD266509D127d0Eac42f4474F57D0526804b44e",
+          "0x66C469fb19a2F6dF10262aA39d630A6EF75DBCDf",
         ]);
-        console.log("check",newRes)
         setUserNft(newRes.nftCollection);
         setUserPageKey(newRes.pageKey);
       };
@@ -93,8 +90,7 @@ const Home: NextPage = () => {
       // Collection
       const fetchCollectionNft = async () => {
         const addresses: string[] = [
-          "0x1ed25648382c2e6da067313e5dacb4f138bc8b33",
-          "0x3cd266509d127d0eac42f4474f57d0526804b44e",
+          "0x66C469fb19a2F6dF10262aA39d630A6EF75DBCDf",
         ];
         const newRes = await fetchCollection(addresses);
         setCollectionNft(newRes.nftCollection);
